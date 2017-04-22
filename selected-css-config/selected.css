@@ -1,0 +1,26 @@
+body {
+  position: relative;
+}
+body:after {
+  display: block;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: #000;
+  z-index: 0;
+}
+.highlight-navbar,.highlight-footer {
+  z-index: 1000;
+  position: relative;
+  outline: 4px yellow;
+}
+ 
+.highlight-navbar {
+  background-color: red;
+}
+.highlight-footer {
+  background-color: green;
+}

@@ -1,0 +1,49 @@
+  [{ "element" : "navbar",
+        "className": "highlight-navbar",
+        "labelColor": "red",
+        "fields": [
+           {
+            "bootstrap-variable": "navbar-height",
+            "min": 50,
+            "max": 100,
+            "step": 5,
+            "unit": "px",
+            "type": "number"
+          },
+          { 
+            "bootstrap-variable": "navbar-default-bg",
+            "unit": "color",
+            "type": "color"
+          },
+           {
+            "bootstrap-variable": "navbar-default-link-color",
+            "unit": "color",
+            "type": "color"
+          }
+        ]
+    },
+      {
+        "element" : "footer",
+        "className": "highlight-footer",
+        "labelColor": "yellow",
+        "fields":  [
+           {
+            "bootstrap-variable": "navbar-height",
+            "min": 50,
+            "max": 100,
+            "step": 5,
+            "unit": "px",
+            "type": "number"
+          },
+          { 
+            "bootstrap-variable": "navbar-default-bg",
+            "unit": "color",
+            "type": "color"
+          },
+           {
+            "bootstrap-variable": "navbar-default-link-color",
+            "unit": "color",
+            "type": "color"     
+          }
+        ]
+    }]
