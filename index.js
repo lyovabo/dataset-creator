@@ -1,21 +1,22 @@
 const webshot = require('webshot'),
+
   fs = require('fs'),
   jsdom = require("jsdom"),
   sass = require('node-sass'),
   configs = require('./configs/config.json'),
   selectedCssPath = './configs/selected.css',
   scssToJson = require('scss-to-json'),
-  jsonSass = require('json-sass'),
   rgbHex = require('rgb-hex'),
   htmlTemplateFolder = './html/',
   compiledCssFolder = './compiled-css-list/',
   scssVariables = './bootstrap/bootstrap/_variables.scss',
   variablesJson = require('./configs/_variables.json'),
-  xmlBuilder = require('xmlbuilder');
+  
+  system = require('system'),
+  phantom = require('node-phantom');
 
-// var variables = scssToJson(scssVariables);
 var htmlFilesList = [],
-  cssFilesList = [];
+    cssFilesList = [];
 
 var files = fs.readdirSync(htmlTemplateFolder);
 files.forEach(file => {
@@ -42,7 +43,7 @@ configs.forEach(function(element) {
         setNumberValue(variablesJson, field['bootstrap-variable'], step);
         const sassString = JsonToSass(variablesJson);
         const fileName = field['bootstrap-variable'] + step;
-        // compileAndWriteCss(sassString, fileName);
+        compileAndWriteCss(sassString, fileName);
         cssFilesList.push('bootstrap-' + fileName + '.css');
       }
     } else if (field.type == 'color') {
@@ -57,7 +58,7 @@ configs.forEach(function(element) {
           setColorValue(variablesJson, field['bootstrap-variable'], colors);
           const sassString = JsonToSass(variablesJson);
           const fileName = field['bootstrap-variable'] + color + step;
-          // compileAndWriteCss(sassString, fileName);
+          compileAndWriteCss(sassString, fileName);
           cssFilesList.push('bootstrap-' + fileName + '.css');
         };
       }
@@ -65,43 +66,41 @@ configs.forEach(function(element) {
     variablesJson['$' + field['bootstrap-variable']] = def;
   });
 });
-
-
+var selectedConf = fs.readFileSync('./selected-css-config/selected.css', 'utf8')
+//selected elements screenshoting
 htmlFilesList.forEach(function(htmlFile) {
   cssFilesList.forEach(function(cssFile) {
-
     var styles = fs.readFileSync(compiledCssFolder + cssFile, 'utf8')
     var options = {
       siteType: 'file',
       customCSS: styles
     }
-    webshot("./html/" + htmlFile, './jpeg/' + htmlFile + cssFile + '.jpg', options, function(err) {});
+    webshot("./html/" + htmlFile, './jpeg/' + htmlFile + cssFile + '.jpg', options, function(err) {
+      // console.log(err);
+    });
 
-    var selectedConf = fs.readFileSync('./selected-css-config/selected.css', 'utf8')
+    
     var selectedCss = styles + selectedConf;
     options = {
       siteType: 'file',
       customCSS: selectedCss
     }
-    // webshot('./html-selected/'+htmlFile+'-selected.html', './jpeg-selected/'+htmlFile+cssFile+'-selected.jpg', options, function(err) {});
-    jsdom.env({
-    file: './html/' + htmlFile,
-    done: function(err, window) {
-      setStyles(window.document,cssFile);
-      var xmlInfo = getXmlAttributes(window.document, configs);
-      var xml = xmlBuilder.create('annotation');
-      console.log(xmlInfo);
+    webshot('./html-selected/'+htmlFile+'-selected.html', './selected-jpeg/'+htmlFile+cssFile+'-selected.jpg', options, function(err) {
+      // console.log(err);
+    });
       
-        // .ele('xmlbuilder')
-        //   .ele('repo', {'type': 'git'}, 'git://github.com/oozcitak/xmlbuilder-js.git')
-        // .end({ pretty: true});
-       
-      // console.log(xml);
+    jsdom.env({
+      file: "./html/"+htmlFile,
+      done:function(err, window) {
+        setStyles(window.document, cssFile);
+        fs.writeFileSync('./temp/'+cssFile+htmlFile, window.document.documentElement.outerHTML,function(){
 
-    }
-  });
+        })
+      }
+    })
   })
-})
+});
+
 
 function compileAndWriteCss(sassString, fileName) {
   fs.writeFileSync('./bootstrap/bootstrap/_variables.scss', sassString);
@@ -127,32 +126,17 @@ function setColorValue(variables, fieldName, colors) {
   variables['$' + fieldName] = '#' + rgbHex(colors['red'], colors['green'], colors['blue']);
 }
 
-// var rect = element[i].getBoundingClientRect();
-// positins.top = rect.top;
-// positions.right = rect.right;
-// positions.bottom = rect.bottom;
-// positions.left = rect.left;
 
-function getXmlAttributes(document, confs){
-  var xmlObjectInfo = [];
-   for (var j = 0; j < confs.length; j++) {
-    var element = document.querySelectorAll('.' + confs[j].element);
-    
-    for (var i = 0; i < element.length; i++) {
-        xmlObjectInfo.push({name:confs[j].element,positions:element[i].getBoundingClientRect()});
-      }
-    }
-  return xmlObjectInfo;
-}
+
+
 function setStyles(document,cssFile){
-   var body  = document.getElementsByTagName('body')[0];
-    var link  = document.createElement('link');
-    link.rel  = 'stylesheet';
-    link.type = 'text/css';
-    link.href = './compiled-css-list/'+cssFile;
-    console.log(link.href);
-    // link.media = 'all';
-    body.appendChild(link);
+  var head  = document.getElementsByTagName('head')[0];
+  var link  = document.createElement('link');
+  link.href = "../compiled-css-list/"+cssFile;
+  link.rel  = 'stylesheet';
+  link.type = 'text/css';  
+  link.media = 'all';
+  head.appendChild(link);
 }
 function addSelectedClasses(document,confs) {
   for (var j = 0; j < confs.length; j++) {
