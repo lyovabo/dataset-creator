@@ -12,6 +12,7 @@ Create empty folders:
 
   - `html-selected`
   - `jpeg`
+  - `xml`
   - `selected-jpeg`
   - `compiled-css-list`
 
