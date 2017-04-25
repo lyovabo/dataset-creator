@@ -26,7 +26,7 @@ function makepage(x) {
         }
         return s;
       }, configs, x);
-      console.log(JSON.stringify(text), x);
+      // console.log(JSON.stringify(text), x);
       if (!!text.length) {
 
         var xml = builder.create('annotation');
