@@ -1,5 +1,5 @@
 .DS_Store
-configs/variables_test.json
-/temp/
-/compiled-css-list/
-/jpeg/
+configs/files.json
+configs/_variables.json
+/output
+node_modules

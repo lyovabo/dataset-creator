@@ -8,18 +8,14 @@ To setup the environment:
 npm install phantomjs -g
 ```
 
-Create empty folders:
-
-  - `html-selected`
-  - `jpeg`
-  - `selected-jpeg`
-  - `compiled-css-list`
 
 To setup configuration only once:
 
-  - `node variables-config.js`
+  - `node config.js`
 
 To run creator:
   - `node index.js`
+  - `node make-screenshot.js`
+  - `node make-selected-htmls.js`
   - `node xml-configs-generator.js`
   - `phantomjs phantomjs-script.js`

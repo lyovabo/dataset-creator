@@ -13,7 +13,7 @@ page.onConsoleMessage = function(msg) {
 function makepage(x) {
   var y = require("webpage").create();
   return function() {
-    y.open('./html-compiled/' + x, function(status) {
+    y.open('./output/html-compiled/' + x, function(status) {
 
 
       var text = y.evaluate(function(configs) {
@@ -42,7 +42,7 @@ function makepage(x) {
             .up().ele('ymax', text[i].position.bottom);
         }
         var content = xml.toString();
-        fs.write('./xml/' + x + '.xml', content, 'w');
+        fs.write('./output/xml/' + x + '.xml', content, 'w');
       }
     });
   };

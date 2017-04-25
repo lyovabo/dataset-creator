@@ -9,7 +9,7 @@ folders.forEach(function(folder) {
 
 var variables = scssToJson('./bootstrap/bootstrap/_variables.scss');
 var str = JsonToSass(variables);
-fs.writeFileSync('./configs/variables.json', JSON.stringify(variables),function(){});
+fs.writeFileSync('./configs/_variables.json', JSON.stringify(variables),function(){});
 
 
 function JsonToSass(sassObj) {
