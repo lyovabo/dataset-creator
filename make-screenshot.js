@@ -25,10 +25,11 @@ htmlFilesList.forEach(function(htmlFile) {
     var options = {
       siteType: 'file',
       customCSS: styles,
-      // width: 'window',
-      // height: 'window',
+      width: 'window',
+      height: 'window',
       defaultWhiteBackground: true
     }
+    try{
     webshot("./html/" + htmlFile, './output/jpeg/' + cssFile + htmlFile + '.jpg', options, function(err) {
       console.log('first webshot')
       console.log(err);
@@ -39,13 +40,21 @@ htmlFilesList.forEach(function(htmlFile) {
     options = {
       siteType: 'file',
       customCSS: selectedCss,
+      width: 'window',
+      height: 'window',
       defaultWhiteBackground: true
     }
     webshot('./output/html-selected/'+htmlFile+'-selected.html', './output/selected-jpeg/'+cssFile+htmlFile+'-selected.jpg', options, function(err) {
        console.log('second webshot')
       console.log(err);
     });
+  }catch(err) {
+    console.log('error is ok , screenshot making is going on');
+    console.log(err);
+    console.log('error is ok , screenshot making is going on');
+  }
       
     
   })
 });
+
