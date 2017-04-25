@@ -12,7 +12,10 @@ body:after {
   background-color: #000;
   z-index: 0;
 }
-.highlight-navbar,.highlight-footer,.highlight-jumbotron {
+
+.highlight-navbar,
+.highlight-footer,
+.highlight-jumbotron {
   z-index: 1000;
   position: relative;
   outline: 4px yellow;
