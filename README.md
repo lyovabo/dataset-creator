@@ -8,6 +8,13 @@ To setup the environment:
 npm install phantomjs -g
 ```
 
+Create empty folders:
+
+  - `html-selected`
+  - `jpeg`
+  - `selected-jpeg`
+  - `compiled-css-list`
+
 To setup configuration only once:
 
   - `node variables-config.js`
