@@ -8,7 +8,7 @@ const webshot = require('webshot'),
   scssToJson = require('scss-to-json'),
   rgbHex = require('rgb-hex'),
   htmlTemplateFolder = './html/',
-  compiledCssFolder = './compiled-css-list/',
+  compiledCssFolder = './output/compiled-css-list/',
   scssVariables = './bootstrap/bootstrap/_variables.scss',
   variablesJson = require('./configs/_variables.json'),
   
@@ -20,14 +20,16 @@ var htmlFilesList = [],
 
 var files = fs.readdirSync(htmlTemplateFolder);
 files.forEach(file => {
-  htmlFilesList.push(file);
+  if(file!='.DS_Store') {
+    htmlFilesList.push(file);
+  }
 });
 htmlFilesList.forEach(function(file) {
   jsdom.env({
     file: './html/' + file,
     done: function(err, window) {
       addSelectedClasses(window.document,configs);
-      fs.writeFile('./html-selected/' + file + '-selected.html', window.document.documentElement.outerHTML,
+      fs.writeFile('./output/html-selected/' + file + '-selected.html', window.document.documentElement.outerHTML,
         function(error) {
           if (error) throw error;
         });
@@ -36,6 +38,7 @@ htmlFilesList.forEach(function(file) {
 })
 
 configs.forEach(function(element) {
+  console.log(element);
   element.fields.forEach(function(field) {
     var def = variablesJson['$' + field['bootstrap-variable']];
     if (field.type == 'number') {
@@ -66,40 +69,7 @@ configs.forEach(function(element) {
     variablesJson['$' + field['bootstrap-variable']] = def;
   });
 });
-var selectedConf = fs.readFileSync('./selected-css-config/selected.css', 'utf8')
-//selected elements screenshoting
-htmlFilesList.forEach(function(htmlFile) {
-  cssFilesList.forEach(function(cssFile) {
-    var styles = fs.readFileSync(compiledCssFolder + cssFile, 'utf8')
-    var options = {
-      siteType: 'file',
-      customCSS: styles
-    }
-    webshot("./html/" + htmlFile, './jpeg/' + htmlFile + cssFile + '.jpg', options, function(err) {
-      // console.log(err);
-    });
 
-    
-    var selectedCss = styles + selectedConf;
-    options = {
-      siteType: 'file',
-      customCSS: selectedCss
-    }
-    webshot('./html-selected/'+htmlFile+'-selected.html', './selected-jpeg/'+htmlFile+cssFile+'-selected.jpg', options, function(err) {
-      // console.log(err);
-    });
-      
-    jsdom.env({
-      file: "./html/"+htmlFile,
-      done:function(err, window) {
-        setStyles(window.document, cssFile);
-        fs.writeFileSync('./temp/'+cssFile+htmlFile, window.document.documentElement.outerHTML,function(){
-
-        })
-      }
-    })
-  })
-});
 
 
 function compileAndWriteCss(sassString, fileName) {
@@ -129,15 +99,15 @@ function setColorValue(variables, fieldName, colors) {
 
 
 
-function setStyles(document,cssFile){
-  var head  = document.getElementsByTagName('head')[0];
-  var link  = document.createElement('link');
-  link.href = "../compiled-css-list/"+cssFile;
-  link.rel  = 'stylesheet';
-  link.type = 'text/css';  
-  link.media = 'all';
-  head.appendChild(link);
-}
+// function setStyles(document,cssFile){
+//   var head  = document.getElementsByTagName('head')[0];
+//   var link  = document.createElement('link');
+//   link.href = "../compiled-css-list/"+cssFile;
+//   link.rel  = 'stylesheet';
+//   link.type = 'text/css';  
+//   link.media = 'all';
+//   head.appendChild(link);
+// }
 function addSelectedClasses(document,confs) {
   for (var j = 0; j < confs.length; j++) {
     var element = document.querySelectorAll('.' + confs[j].element);

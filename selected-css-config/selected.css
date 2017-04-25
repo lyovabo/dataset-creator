@@ -10,9 +10,9 @@ body:after {
   bottom: 0;
   right: 0;
   background-color: #000;
-  z-index: 1;
+  z-index: 0;
 }
-.highlight-navbar,.highlight-footer {
+.highlight-navbar,.highlight-footer,.highlight-jumbotron {
   z-index: 1000;
   position: relative;
   outline: 4px yellow;

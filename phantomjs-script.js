@@ -13,7 +13,7 @@ page.onConsoleMessage = function(msg) {
 function makepage(x) {
   var y = require("webpage").create();
   return function() {
-    y.open('./temp/' + x, function(status) {
+    y.open('./html-compiled/' + x, function(status) {
 
 
       var text = y.evaluate(function(configs) {

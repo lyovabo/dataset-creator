@@ -1,10 +1,15 @@
 const fs = require('fs'),
 scssToJson = require('scss-to-json');
- 
+var outputPath  = './output';
+var folders = ['compiled-css-list','html-compiled','html-selected','jpeg','selected-jpeg','xml'];
+fs.mkdirSync('./output');
+folders.forEach(function(folder) {
+  fs.mkdirSync(outputPath+'/'+folder);
+})
+
 var variables = scssToJson('./bootstrap/bootstrap/_variables.scss');
-console.log(variables)
 var str = JsonToSass(variables);
-fs.writeFileSync('./configs/variables_test.json', JSON.stringify(variables),function(){});
+fs.writeFileSync('./configs/variables.json', JSON.stringify(variables),function(){});
 
 
 function JsonToSass(sassObj) {

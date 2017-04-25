@@ -21,29 +21,29 @@
             "type": "color"
           }
         ]
-    },
-      {
-        "element" : "footer",
-        "className": "highlight-footer",
-        "labelColor": "yellow",
+    },{
+        "element" : "jumbotron",
+        "className": "highlight-jumbotron",
+        "labelColor": "green",
         "fields":  [
            {
-            "bootstrap-variable": "navbar-height",
-            "min": 50,
-            "max": 100,
+            "bootstrap-variable": "jumbotron-padding",
+            "min": 0,
+            "max": 60,
             "step": 5,
             "unit": "px",
             "type": "number"
           },
-          { 
-            "bootstrap-variable": "navbar-default-bg",
+          {
+            "bootstrap-variable": "jumbotron-bg",
             "unit": "color",
             "type": "color"
           },
            {
-            "bootstrap-variable": "navbar-default-link-color",
+            "bootstrap-variable": "jumbotron-color",
             "unit": "color",
-            "type": "color"     
+            "type": "color"
           }
         ]
-    }]
+    }
+      ]    
