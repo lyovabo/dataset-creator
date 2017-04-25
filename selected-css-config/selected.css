@@ -10,7 +10,7 @@ body:after {
   bottom: 0;
   right: 0;
   background-color: #000;
-  z-index: 0;
+  z-index: 1;
 }
 .highlight-navbar,.highlight-footer {
   z-index: 1000;
@@ -22,5 +22,8 @@ body:after {
   background-color: red;
 }
 .highlight-footer {
+  background-color: yellow;
+}
+.highlight-jumbotron {
   background-color: green;
 }
