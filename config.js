@@ -1,7 +1,7 @@
 const fs = require('fs'),
 scssToJson = require('scss-to-json');
 var outputPath  = './output';
-var folders = ['compiled-css-list','html-compiled','html-selected','jpeg','selected-jpeg','xml'];
+var folders = ['compiled-css-list','selected-css-list','html-default-compiled','html-selected-compiled','html-selected','jpeg','selected-jpeg','xml'];
 fs.mkdirSync('./output');
 folders.forEach(function(folder) {
   fs.mkdirSync(outputPath+'/'+folder);

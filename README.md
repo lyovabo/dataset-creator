@@ -15,7 +15,5 @@ To setup configuration only once:
 
 To run creator:
   - `node index.js`
-  - `node make-screenshot.js`
-  - `node make-selected-htmls.js`
-  - `node xml-configs-generator.js`
-  - `phantomjs phantomjs-script.js`
+  - `phantomjs screenshots.js`
+  - `phantomjs make-xml.js`

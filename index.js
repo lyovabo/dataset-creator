@@ -4,11 +4,12 @@ const webshot = require('webshot'),
   jsdom = require("jsdom"),
   sass = require('node-sass'),
   configs = require('./configs/config.json'),
-  selectedCssPath = './configs/selected.css',
+  selectedCssPath = './selected-css-config/selected.css',
   scssToJson = require('scss-to-json'),
   rgbHex = require('rgb-hex'),
   htmlTemplateFolder = './html/',
   compiledCssFolder = './output/compiled-css-list/',
+  selectedCssFolder = './output/selected-css-list',
   scssVariables = './bootstrap/bootstrap/_variables.scss',
   variablesJson = require('./configs/_variables.json'),
   
@@ -18,6 +19,7 @@ const webshot = require('webshot'),
 var htmlFilesList = [],
     cssFilesList = [];
 
+var selectedCss = fs.readFileSync(selectedCssPath);
 var files = fs.readdirSync(htmlTemplateFolder);
 files.forEach(file => {
   if(file!='.DS_Store') {
@@ -29,7 +31,7 @@ htmlFilesList.forEach(function(file) {
     file: './html/' + file,
     done: function(err, window) {
       addSelectedClasses(window.document,configs);
-      fs.writeFile('./output/html-selected/' + file + '-selected.html', window.document.documentElement.outerHTML,
+      fs.writeFileSync('./output/html-selected/' + file, window.document.documentElement.outerHTML,
         function(error) {
           if (error) throw error;
         });
@@ -38,7 +40,6 @@ htmlFilesList.forEach(function(file) {
 })
 
 configs.forEach(function(element) {
-  console.log(element);
   element.fields.forEach(function(field) {
     var def = variablesJson['$' + field['bootstrap-variable']];
     if (field.type == 'number') {
@@ -69,7 +70,39 @@ configs.forEach(function(element) {
     variablesJson['$' + field['bootstrap-variable']] = def;
   });
 });
+var compiledFilesList = [];
+htmlFilesList.forEach(function(htmlFile,hindex) {
+  cssFilesList.forEach(function(cssFile,cindex){
+  compiledFilesList.push(cssFile + htmlFile + '.html');
+  jsdom.env({
+    file: './html/' + htmlFile,
+    done: function(err, window) {
+      setStyles(window.document, cssFile,"../compiled-css-list/");
+      fs.writeFileSync('./output/html-default-compiled/' + cssFile + htmlFile + '.html', window.document.documentElement.outerHTML,
+        function(error) {
+          if (error) throw error;
+        });
 
+      }
+    });
+  jsdom.env({
+    file: './output/html-selected/' + htmlFile,
+    done: function(err, window) {
+      // console.log(window.document.documentElement.outerHTML);
+      
+      setStyles(window.document, cssFile, "../selected-css-list/");
+      fs.writeFileSync('./output/html-selected-compiled/' + cssFile + htmlFile + '.html', window.document.documentElement.outerHTML,
+        function(error) {
+          if (error) throw error;
+        });
+        
+      }
+    });
+
+  })
+});
+fs.writeFileSync('./configs/files.json', JSON.stringify(compiledFilesList));
+// console.log(compiledFilesList);
 
 
 function compileAndWriteCss(sassString, fileName) {
@@ -78,6 +111,12 @@ function compileAndWriteCss(sassString, fileName) {
     file: './bootstrap/bootstrap.scss'
   });
   fs.writeFileSync(compiledCssFolder + '/bootstrap-' + fileName + '.css', result.css);
+  writeSelectedCss(result.css,fileName);
+}
+function writeSelectedCss(styles,fileName) {
+  
+  styles = styles + selectedCss;
+  fs.writeFileSync(selectedCssFolder + '/bootstrap-' + fileName + '.css', styles);
 }
 
 function JsonToSass(sassObj) {
@@ -99,15 +138,15 @@ function setColorValue(variables, fieldName, colors) {
 
 
 
-// function setStyles(document,cssFile){
-//   var head  = document.getElementsByTagName('head')[0];
-//   var link  = document.createElement('link');
-//   link.href = "../compiled-css-list/"+cssFile;
-//   link.rel  = 'stylesheet';
-//   link.type = 'text/css';  
-//   link.media = 'all';
-//   head.appendChild(link);
-// }
+function setStyles(document,cssFile,path){
+  var head  = document.getElementsByTagName('head')[0];
+  var link  = document.createElement('link');
+  link.href = path+cssFile;
+  link.rel  = 'stylesheet';
+  link.type = 'text/css';  
+  link.media = 'all';
+  head.appendChild(link);
+}
 function addSelectedClasses(document,confs) {
   for (var j = 0; j < confs.length; j++) {
     var element = document.querySelectorAll('.' + confs[j].element);
