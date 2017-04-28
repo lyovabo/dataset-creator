@@ -2,4 +2,4 @@
 configs/files.json
 configs/_variables.json
 /output
-node_modules
+/node_modules
