@@ -13,7 +13,7 @@ page.onConsoleMessage = function(msg) {
 function makepage(x) {
   var y = require("webpage").create();
   return function() {
-    y.open('./output/html-compiled/' + x, function(status) {
+    y.open('./output/html-default-compiled/' + x, function(status) {
 
 
       var text = y.evaluate(function(configs) {
@@ -47,7 +47,10 @@ function makepage(x) {
     });
   };
 }
-files.forEach(function(config) {
 
+files.forEach(function(config,index) {
   makepage(config)();
+  if(index == files.length -1) {
+    phantom.exit(0);
+  }
 })

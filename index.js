@@ -26,18 +26,23 @@ files.forEach(file => {
     htmlFilesList.push(file);
   }
 });
-htmlFilesList.forEach(function(file) {
-  jsdom.env({
-    file: './html/' + file,
-    done: function(err, window) {
-      addSelectedClasses(window.document,configs);
-      fs.writeFileSync('./output/html-selected/' + file, window.document.documentElement.outerHTML,
-        function(error) {
-          if (error) throw error;
-        });
-    }
-  });
-})
+console.log(htmlFilesList);
+// function createSelected(){
+
+
+  htmlFilesList.forEach(function(file) {
+    jsdom.env({
+      file: './html/' + file,
+      done: function(err, window) {
+        addSelectedClasses(window.document,configs);
+        fs.writeFileSync('./output/html-selected/' + file, window.document.documentElement.outerHTML,
+          function(error) {
+            if (error) throw error;
+          });
+      }
+    });
+  })
+// }
 
 configs.forEach(function(element) {
   element.fields.forEach(function(field) {
@@ -88,8 +93,8 @@ htmlFilesList.forEach(function(htmlFile,hindex) {
   jsdom.env({
     file: './output/html-selected/' + htmlFile,
     done: function(err, window) {
-      // console.log(window.document.documentElement.outerHTML);
       
+
       setStyles(window.document, cssFile, "../selected-css-list/");
       fs.writeFileSync('./output/html-selected-compiled/' + cssFile + htmlFile + '.html', window.document.documentElement.outerHTML,
         function(error) {
