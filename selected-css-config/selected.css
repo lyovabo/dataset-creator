@@ -15,18 +15,30 @@ body:after {
 
 .highlight-navbar,
 .highlight-footer,
-.highlight-jumbotron {
+.highlight-jumbotron,
+.highlight-pagination {
   z-index: 1000;
   position: relative;
-  outline: 4px yellow;
+  outline: 4px solid rgb(224,224,192);
+  border-radius: 0 !important;
+}
+.highlight-navbar *,
+.highlight-footer *,
+.highlight-jumbotron *,
+.highlight-pagination * {
+  visibility: hidden;
 }
  
 .highlight-navbar {
   background-color: red;
 }
 .highlight-footer {
-  background-color: yellow;
+  background-color: blue;
 }
 .highlight-jumbotron {
   background-color: green;
 }
+.highlight-pagination {
+  background-color: yellow;
+}
+

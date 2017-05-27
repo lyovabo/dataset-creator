@@ -44,7 +44,7 @@ function handle_selected(file){
           });
         
         page.viewportSize = { width: 1024, height: h.height  };
-        page.render('./output/selected-jpeg/'+file+'.jpg');
+        page.render('./output/selected-jpeg/'+file+'.png', {format: 'png', quality: '100'});
         setTimeout(next_selected,100);
     });
 }

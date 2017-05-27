@@ -50,7 +50,7 @@ function makepage(x) {
 
 files.forEach(function(config,index) {
   makepage(config)();
-  if(index == files.length -1) {
-    phantom.exit(0);
-  }
+  //if(index == files.length -1) {
+   // phantom.exit(0);
+  //}
 })
