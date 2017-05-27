@@ -4,9 +4,9 @@
         "fields": [
            {
             "bootstrap-variable": "navbar-height",
-            "min": 50,
-            "max": 100,
-            "step": 5,
+            "min": 45,
+            "max": 60,
+            "step": 8,
             "unit": "px",
             "type": "number"
           },
@@ -28,9 +28,9 @@
         "fields":  [
            {
             "bootstrap-variable": "jumbotron-padding",
-            "min": 0,
-            "max": 60,
-            "step": 5,
+            "min": 40,
+            "max": 100,
+            "step": 20,
             "unit": "px",
             "type": "number"
           },
@@ -45,5 +45,53 @@
             "type": "color"
           }
         ]
-    }
-      ]    
+    },{
+        "element" : "footer",
+        "className": "highlight-footer",
+        "labelColor": "blue",
+        "fields":  [
+           {
+            "bootstrap-variable": "footer-height",
+            "min": 30,
+            "max": 100,
+            "step": 30,
+            "unit": "px",
+            "type": "number"
+          },
+          {
+            "bootstrap-variable": "footer-bg",
+            "unit": "color",
+            "type": "color"
+          },
+           {
+            "bootstrap-variable": "footer-color",
+            "unit": "color",
+            "type": "color"
+          }
+        ]
+    },{
+        "element" : "pagination",
+        "className": "highlight-pagination",
+        "labelColor": "yellow",
+        "fields":  [
+           {
+            "bootstrap-variable": "pagination-height",
+            "min": 30,
+            "max": 45,
+            "step": 10,
+            "unit": "px",
+            "type": "number"
+          },
+          {
+            "bootstrap-variable": "pagination-bg",
+            "unit": "color",
+            "type": "color"
+          },
+           {
+            "bootstrap-variable": "pagination-color",
+            "unit": "color",
+            "type": "color"
+          }
+        ]
+    }]
+    

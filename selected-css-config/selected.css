@@ -10,14 +10,14 @@ body:after {
   bottom: 0;
   right: 0;
   background-color: #000;
-  z-index: 0;
+  z-index: 50000;
 }
 
 .highlight-navbar,
 .highlight-footer,
 .highlight-jumbotron,
 .highlight-pagination {
-  z-index: 1000;
+  z-index: 60000;
   position: relative;
   outline: 4px solid rgb(224,224,192);
   border: 0 none !important;

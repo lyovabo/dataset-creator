@@ -24,7 +24,7 @@ function handle_page(file){
             return document.getElementsByTagName('body')[0].getBoundingClientRect();
           });
         
-        page.viewportSize = { width: 1024, height: h.height  };
+        page.viewportSize = { width: 1200, height: 120 /*h.height*/ };
         page.render('./output/jpeg/'+file+'.jpg');
         setTimeout(function(){handle_selected(file)},100);
     });
@@ -43,7 +43,7 @@ function handle_selected(file){
             return document.getElementsByTagName('body')[0].getBoundingClientRect();
           });
         
-        page.viewportSize = { width: 1024, height: h.height  };
+        page.viewportSize = { width: 1200, height: 120 /*h.height*/ };
         page.render('./output/selected-jpeg/'+file+'.png', {format: 'png', quality: '100'});
         setTimeout(next_selected,100);
     });
