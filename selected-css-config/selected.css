@@ -20,6 +20,8 @@ body:after {
   z-index: 1000;
   position: relative;
   outline: 4px solid rgb(224,224,192);
+  border: 0 none !important;
+  background-image: none !important;
   border-radius: 0 !important;
 }
 .highlight-navbar *,
